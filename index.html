@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name='viewport' content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>3D翻页效果</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			margin: 40px auto;
+			perspective: 800px;
+			perspective-origin: 50% 50%;
+			overflow: hidden;
+		}
+		.inner{
+			width: 300px;
+			height: 225px;
+			margin: 0 auto;
+			position: relative;
+			transform-style: perserve-3d;
+		}
+		.page{
+			display: none;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 300px;
+			height: 225px;
+			font-size: 360px;
+			line-height: 360px;
+			text-align: center;
+			color: #fff;
+			background: #000;
+			font-weight: bold;
+			font-family: 'Arial';
+			transform-origin: bottom;
+			transition: transform 0.5s linear;
+			/* transform: rotateX(0deg); */
+		}
+		.controller{
+			text-align: center;
+		}
+		.controller a{
+			display: inline-block;
+			width: 60px;
+			color: #000;
+			font-size: 14px;
+			line-height: 30px;
+			text-align: center;
+			text-decoration: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+		.controller a + a{
+			margin-left: 50px;
+		}
+		.controller a:hover{
+			background: #eee;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="inner">
+			<img class="page" id="page1" src="./1.jpg" alt="">
+			<img class="page" id="page2" src="./2.jpg" alt="">
+			<img class="page" id="page3" src="./3.jpg" alt="">
+			<img class="page" id="page4" src="./4.jpg" alt="">
+			<img class="page" id="page5" src="./5.jpg" alt="">
+			<img class="page" id="page6" src="./6.jpg" alt="">
+			<img class="page" id="page7" src="./7.jpg" alt="">
+		</div>
+	</div>
+	<div class="controller">
+		<a href="javascript: next();">下一张</a><a href="javascript: prev();">上一张</a>
+	</div>
+
+	<script>
+		var current = 1
+		var pages = document.getElementsByClassName('page')
+		for(var i = pages.length - 1; i >= 0; i-- ){
+			pages[i].style.display = 'block'
+			pages[i].style.zIndex = pages.length - i
+			if(i == 0){
+				pages[i].style.transform = 'rotateX(0deg)'
+			}else{
+				pages[i].style.transform = 'rotateX(90deg)'
+			}
+		}
+		function next(){
+			var len = document.getElementsByClassName('page').length
+			if(current == len){
+				return 
+			}
+			var curPage = document.getElementById('page' + current)
+			curPage.style.transform = 'rotateX(-90deg)'
+
+			current++
+			/*if(current > len){
+				current = 1
+			}*/
+			var nextPage = document.getElementById('page' + current)
+			nextPage.style.transform = 'rotateX(0deg)'
+
+		}
+		function prev(){
+			if(current == 1){
+				return 
+			}
+			var curPage = document.getElementById('page' + current)
+			curPage.style.transform = 'rotateX(90deg)'
+
+			current--
+
+			var prevPage = document.getElementById('page' + current)
+			prevPage.style.transform = 'rotateX(0deg)'
+		}
+	</script>
+</body>
+</html>
